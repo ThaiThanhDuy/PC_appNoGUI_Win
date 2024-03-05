@@ -8,6 +8,8 @@ int upKey = 72;
 int downKey = 80;
 int enterKey = 13;
 int escKey = 27;
+int leftKey =75;
+int rightKey = 77;
 char key;
 char command[10] = " ";
 char command1[10] = "Start";
