@@ -1,20 +1,30 @@
-char stringInput[100] = " ";
+char stringInput[20] = " ";
+char n[100];
+char o;
+int j =1;
+int temp =0;
+int result=0.0;
 void stringProcessing(char string[]){
-    char n[100];
-    char o[100];
-    int j =0;
-    int Point =0;
-    while (Point==1)
-    {   
-        for (int i = 0; i < strlen(string); i++){
-            if(ispunct(string[i]==0))
-                strncpy(n,string,1);
-                printf("%c",n[i]);                 
-        }      
-      
-        
-        Point =1;
+    
+    result =0;
+    for (int i = 1; i <= strlen(string); i++)
+    {
+        if(isdigit(string[i])!=0){
+            n[j] = string[i];
+           temp=strtod(n,NULL);
+        }
+
+        else{
+            continue;
+        }
+        result += temp;
+        j++;
     }
+    
+    printf("%d",result);
+    
+    
+    
     
 }
 void Start(){
