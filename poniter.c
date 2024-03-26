@@ -8,7 +8,7 @@ void main(){
     *px=20; // thay doi  gia tri con tro -> doi dia chi nho cua bien va gia tri cua bien
     printf("%d\n",*px);
     printf("%d\n",x);
-
+    
     printf("%p\n",px);
     printf("%p\n",&x);
 
