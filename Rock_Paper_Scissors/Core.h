@@ -1,3 +1,5 @@
+#include "asset.h"
+
 struct Player
 {
     int health;
@@ -6,7 +8,7 @@ struct Player
     int bonusDameItem;
 } Player1;
 void playTurn();
-void choiceItem(int choiceOption);
+void endGame();
 int healBot = 10;
 char option[10] = "";
 char option1[10] = "Rock";
@@ -29,7 +31,11 @@ char key1;
 char key2;
 int useAI = 0;
 int useSI = 0;
-
+int turn = 1;
+char *filePath = "Score.txt";
+FILE *file;
+char namePlayer[10] = "hnp12";
+int stt;
 void addPointer(int *pointer, int range)
 {
     if (*pointer == range)
@@ -61,11 +67,14 @@ int randomOneNumber(int min, int max)
 }
 void choiceOption(int AItem, int SItem, int choiceOption)
 {
+    printf("---Turn %d---\n", turn);
+    printf("Your name : %s\n", namePlayer);
     printf("Bot heal : %d\n", healBot);
     printf("Your heal :%d\n", Player1.health);
     printf("Your have %d attack item and %d shield item\n", AItem, SItem);
     printf("Your choise:%s\n", option);
     printf("Choice item your want use :%s\n", item);
+
     if (choiceOption == 1)
     {
         strcpy(option, option1);
@@ -107,63 +116,6 @@ void choiceOption(int AItem, int SItem, int choiceOption)
         strcpy(item, itemS);
         itemChoice = 2;
         playerChoice = 3;
-    }
-}
-void showAsset(int choice)
-{
-    if (choice == 1)
-    {
-        printf("    _______\n");
-        printf("---'   ____)\n");
-        printf("      (_____)\n");
-        printf("      (_____)\n");
-        printf("      (____)\n");
-        printf("---.__(___)\n");
-    }
-    else if (choice == 2)
-    {
-        printf("    _______\n");
-        printf("---'   ____)____\n");
-        printf("          ______)\n");
-        printf("          _______)\n");
-        printf("         _______)\n");
-        printf("---.__________)\n");
-    }
-    else if (choice == 3)
-    {
-        printf("    _______\n");
-        printf("---'   ____)____\n");
-        printf("          ______)\n");
-        printf("       __________)\n");
-        printf("      (____)\n");
-        printf("---.__(___)\n");
-    }
-    else if (choice == 4)
-    {
-        printf("  _______\n");
-        printf(" (____   '---\n");
-        printf("(_____)\n");
-        printf("(_____)\n");
-        printf(" (____)\n");
-        printf("  (___)__.---\n");
-    }
-    else if (choice == 5)
-    {
-        printf("       _______\n");
-        printf("  ____(____   '---\n");
-        printf(" (______\n");
-        printf("(_______\n");
-        printf(" (______\n");
-        printf("   (__________.---\n");
-    }
-    else if (choice == 6)
-    {
-        printf("       _______\n");
-        printf("  ____(____   '---\n");
-        printf(" (______\n");
-        printf("(__________\n");
-        printf("      (____)\n");
-        printf("       (___)__.---\n");
     }
 }
 void updatePlayer(int heal)
@@ -219,14 +171,14 @@ int player1Win(int choice1, int choice2)
         return 10;
     }
 }
-void result()
+void result(int item)
 {
-   
-     if (itemChoice == 1)
+    turn++;
+    if (item == 2)
     {
 
         Player1.bonusDameItem -= 1;
-         if (Player1.bonusDameItem < 0)
+        if (Player1.bonusDameItem < 0)
         {
             printf("You don't have bonus dame Item\n");
             Player1.bonusDameItem = 0;
@@ -239,17 +191,17 @@ void result()
             useSI = 0;
         }
     }
-    else if (itemChoice == 2)
+    else if (item == 1)
     {
         Player1.shieldItem -= 1;
-          if (Player1.shieldItem <= 0)
+        if (Player1.shieldItem <= 0)
         {
             printf("You don't have shield Item\n");
             Player1.shieldItem = 0;
             useSI = 0;
             useAI = 0;
         }
-       
+
         else
         {
             useSI = 1;
@@ -263,7 +215,7 @@ void result()
             updatePlayer(0);
             healBot -= 2;
         }
-        else if(useAI==0)
+        else if (useAI == 0)
         {
             updatePlayer(0);
             healBot -= 1;
@@ -281,12 +233,67 @@ void result()
         {
             updatePlayer(0);
         }
-        else if(useSI == 0)
+        else if (useSI == 0)
         {
             updatePlayer(1);
         }
         printf("\nLose");
+        
     }
+}
+void endGame()
+{
+    char ch;
+    int score;
+    int n1=0;
+    int n2=0;
+    char *ptr;
+    int n=0;
+    char buf[10]; 
+    char str[50]="Best core is duy12 with turn:10";
+    FILE *file = fopen(filePath, "a+");
+    if (file == NULL)
+    {
+        printf("ERROR! cannot save!\n");
+    }
+    else
+    {
+        while((ch= fgetc(file))!=EOF){
+            if ((int)ch == ':')
+            {
+              
+            }
+            else{
+                n++;
+            }
+            if (n==29)
+            {       
+              n1=strtol(&ch,&ptr,10);
+              score=n1;
+            }
+            else if (n==30)
+            {       
+                
+                n2=strtol(&ch,&ptr,10);
+                score = n1*10+n2;
+            }
+            
+          
+          
+        }
+
+        printf("%d",score);
+            printf("%d",turn);
+         if (turn<score)
+        {
+
+             
+        }
+            
+      
+      
+    }
+    fclose(file);
 }
 void playTurn()
 {
@@ -299,19 +306,17 @@ void playTurn()
         if (key1 == rightKey)
         {
             addPointer(pxx, 6);
-
             choiceOption(Player1.bonusDameItem, Player1.shieldItem, xx);
         }
         else if (key1 == leftKey)
         {
             subPointer(pxx, 6);
-
             choiceOption(Player1.bonusDameItem, Player1.shieldItem, xx);
         }
 
         else if (key1 == enterKey)
         {
-            
+
             if (playerChoice == 1)
             {
                 showAsset(1);
@@ -325,20 +330,77 @@ void playTurn()
                 showAsset(3);
             }
             updateBot();
-            result();
+            result(itemChoice);
+            if (healBot == 0)
+            {
+                endGame();
+                system("cls");
+                printf("You win the bot!\n");
+                exit(0);
+            }
+            else if (Player1.health == 0){
+                 system("cls");
+                printf("You lose the bot!\n");
+                exit(0);
+            }
         }
 
         key1 = getch();
         system("cls");
     }
 }
+void enterName()
+{
+    int passName =0;
+    do{
+     printf("Enter your name:");
+     scanf("%s", &namePlayer);
+     if(strlen(namePlayer)==5){
+        passName=1;
+     }
+     else {
+        printf("ERROR! Name must 5 character\n");
+        passName=0;
+     }
+    }
+    while(passName==0);
+    fflush(stdin);
+}
 void startMenu()
 {
     Player1.health = 5;
     Player1.bonusDameItem = 5;
     Player1.shieldItem = 5;
+    enterName();
     playTurn();
 }
 void scoreMenu()
 {
+    /*char ch;
+    file = fopen(filePath, "r");
+    if (file == NULL)
+    {
+        printf("The file is not opened!\n");
+    }
+    else
+    {
+        while (1)
+        {
+            if (key == escKey)
+            {
+                exit(0);
+            }
+            else
+            {
+                while ((ch = fgetc(file)) != EOF)
+                {
+                    putchar(ch);
+                }
+                fclose(file);
+            }
+            key = getch();
+        }
+    }*/
+    turn =10;
+    endGame();
 }

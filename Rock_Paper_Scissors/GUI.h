@@ -13,6 +13,7 @@ void menu(int choiceOption){
    
    if(choiceOption==1){
      strcpy(command,command1);
+     
    }
    else if (choiceOption==2)    
    {
@@ -59,6 +60,8 @@ void run(){
         
         key=getch();
         system("cls");
+
+
     }
     
 }
