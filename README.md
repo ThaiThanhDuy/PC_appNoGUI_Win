@@ -1,5 +1,8 @@
 # How to run
-- Go to path file to want run use ```cd``` command
+- Go to path file use command :
+```
+cd \pathfile
+``` 
 - Then use command :
 
 ```
