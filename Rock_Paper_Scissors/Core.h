@@ -1,5 +1,4 @@
 #include "asset.h"
-
 struct Player
 {
     int health;
@@ -8,7 +7,7 @@ struct Player
     int bonusDameItem;
 } Player1;
 void playTurn();
-void endGame();
+bool checkScore();
 int healBot = 10;
 char option[10] = "";
 char option1[10] = "Rock";
@@ -238,60 +237,67 @@ void result(int item)
             updatePlayer(1);
         }
         printf("\nLose");
-        
     }
 }
-void endGame()
+void WriteScore()
+{
+    FILE *file = fopen(filePath, "w+");
+    if (file == NULL)
+    {
+        printf("ERROR! Cannot open file\n");
+    }
+    else
+    {
+        fprintf(file, "Best core is %s with turn:%d", namePlayer, turn);
+    }
+
+    fclose(file);
+}
+bool checkScore()
 {
     char ch;
     int score;
-    int n1=0;
-    int n2=0;
+    int n1 = 0;
+    int n2 = 0;
     char *ptr;
-    int n=0;
-    char buf[10]; 
-    char str[50]="Best core is duy12 with turn:10";
-    FILE *file = fopen(filePath, "a+");
+    int n = 0;
+    char buf[10];
+    file = fopen(filePath, "a+");
     if (file == NULL)
     {
         printf("ERROR! cannot save!\n");
     }
     else
     {
-        while((ch= fgetc(file))!=EOF){
+        while ((ch = fgetc(file)) != EOF)
+        {
             if ((int)ch == ':')
             {
-              
             }
-            else{
+            else
+            {
                 n++;
             }
-            if (n==29)
-            {       
-              n1=strtol(&ch,&ptr,10);
-              score=n1;
+            if (n == 29)
+            {
+                n1 = strtol(&ch, &ptr, 10);
+                score = n1;
             }
-            else if (n==30)
-            {       
-                
-                n2=strtol(&ch,&ptr,10);
-                score = n1*10+n2;
-            }
-            
-          
-          
-        }
+            else if (n == 30)
+            {
 
-        printf("%d",score);
-            printf("%d",turn);
-         if (turn<score)
+                n2 = strtol(&ch, &ptr, 10);
+                score = n1 * 10 + n2;
+            }
+        }
+        if (turn < score)
         {
-
-             
+            return true;
         }
-            
-      
-      
+        else
+        {
+            return false;
+        }
     }
     fclose(file);
 }
@@ -333,13 +339,17 @@ void playTurn()
             result(itemChoice);
             if (healBot == 0)
             {
-                endGame();
+                if (checkScore() == true)
+                {
+                    WriteScore();
+                }
                 system("cls");
                 printf("You win the bot!\n");
                 exit(0);
             }
-            else if (Player1.health == 0){
-                 system("cls");
+            else if (Player1.health == 0)
+            {
+                system("cls");
                 printf("You lose the bot!\n");
                 exit(0);
             }
@@ -351,19 +361,21 @@ void playTurn()
 }
 void enterName()
 {
-    int passName =0;
-    do{
-     printf("Enter your name:");
-     scanf("%s", &namePlayer);
-     if(strlen(namePlayer)==5){
-        passName=1;
-     }
-     else {
-        printf("ERROR! Name must 5 character\n");
-        passName=0;
-     }
-    }
-    while(passName==0);
+    int passName = 0;
+    do
+    {
+        printf("Enter your name:");
+        scanf("%s", &namePlayer);
+        if (strlen(namePlayer) == 5)
+        {
+            passName = 1;
+        }
+        else
+        {
+            printf("ERROR! Name must 5 character\n");
+            passName = 0;
+        }
+    } while (passName == 0);
     fflush(stdin);
 }
 void startMenu()
@@ -376,7 +388,9 @@ void startMenu()
 }
 void scoreMenu()
 {
-    /*char ch;
+    char ch;
+    const unsigned MAX_LENGTH = 256;
+    char buffer[MAX_LENGTH];
     file = fopen(filePath, "r");
     if (file == NULL)
     {
@@ -384,23 +398,9 @@ void scoreMenu()
     }
     else
     {
-        while (1)
-        {
-            if (key == escKey)
-            {
-                exit(0);
-            }
-            else
-            {
-                while ((ch = fgetc(file)) != EOF)
-                {
-                    putchar(ch);
-                }
-                fclose(file);
-            }
-            key = getch();
-        }
-    }*/
-    turn =10;
-    endGame();
+
+        while (fgets(buffer, MAX_LENGTH, file))
+            printf("%s", buffer);
+        fclose(file);
+    }
 }
