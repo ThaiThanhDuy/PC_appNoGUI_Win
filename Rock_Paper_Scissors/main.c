@@ -6,6 +6,7 @@
 #include <time.h>
 #include <stdbool.h>
 #include "GUI.h"
+#include <stdlib.h>
 
 void main(){
     run();
