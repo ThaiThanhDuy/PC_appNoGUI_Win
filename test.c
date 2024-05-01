@@ -3,6 +3,7 @@
 #include <string.h>
 
 void main(){
-  printf("hello");
+   int count =0;
+   ++count;
 }
 
