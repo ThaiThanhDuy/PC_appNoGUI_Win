@@ -67,8 +67,7 @@ int randomOneNumber(int min, int max)
 void choiceOption(int AItem, int SItem, int choiceOption)
 {
     printf("---Turn %d---\n", turn);
-    printf("Your name : %s\n", namePlayer);
-    printf("Bot heal : %d\n", healBot);
+    printf("Your name : %s\n", namePlayer);e43w
     printf("Your heal :%d\n", Player1.health);
     printf("Your have %d attack item and %d shield item\n", AItem, SItem);
     printf("Your choise:%s\n", option);
@@ -117,6 +116,7 @@ void choiceOption(int AItem, int SItem, int choiceOption)
         playerChoice = 3;
     }
 }
+
 void updatePlayer(int heal)
 {
     Player1.health -= heal;
@@ -239,6 +239,7 @@ void result(int item)
         printf("\nLose");
     }
 }
+
 void WriteScore()
 {
     FILE *file = fopen(filePath, "w+");
