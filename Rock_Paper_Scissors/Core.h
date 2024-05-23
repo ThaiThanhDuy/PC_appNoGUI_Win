@@ -6,6 +6,7 @@ struct Player
     int shieldItem;
     int bonusDameItem;
 } Player1;
+printf.abcA()
 void playTurn();
 bool checkScore();
 int healBot = 10;
