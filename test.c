@@ -3,7 +3,7 @@
 #include <string.h>
 
 void main(){
-   int count =0;
-   ++count;
+
+   
 }
 
