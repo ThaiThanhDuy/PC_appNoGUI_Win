@@ -6,7 +6,7 @@ struct Player
     int shieldItem;
     int bonusDameItem;
 } Player1;
-printf.abcA()
+
 void playTurn();
 bool checkScore();
 int healBot = 10;
@@ -68,7 +68,7 @@ int randomOneNumber(int min, int max)
 void choiceOption(int AItem, int SItem, int choiceOption)
 {
     printf("---Turn %d---\n", turn);
-    printf("Your name : %s\n", namePlayer);e43w
+    printf("Your name : %s\n", namePlayer);
     printf("Your heal :%d\n", Player1.health);
     printf("Your have %d attack item and %d shield item\n", AItem, SItem);
     printf("Your choise:%s\n", option);
