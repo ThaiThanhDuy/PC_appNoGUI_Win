@@ -1,0 +1,3 @@
+/home/duy/Code/C/PC_appNoGUI_Win/Test/build/CMakeFiles/run.dir
+/home/duy/Code/C/PC_appNoGUI_Win/Test/build/CMakeFiles/edit_cache.dir
+/home/duy/Code/C/PC_appNoGUI_Win/Test/build/CMakeFiles/rebuild_cache.dir
